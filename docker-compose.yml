@@ -1,0 +1,35 @@
+# Стандартная версия для docker-compose
+version: '3.8'
+
+# Описание сервисов (контейнеров)
+services:
+  # Сервис базы данных PostgreSQL
+  db:
+    # Это говорит Docker Compose собрать образ из Dockerfile в текущей папке
+    build: .
+    container_name: wildberries_db
+    restart: always
+    environment:
+      # Эти переменные автоматически создадут базу данных и пользователя
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      # Сохраняем данные БД, чтобы они не пропадали
+      - db_data:/var/lib/postgresql/data
+
+  # Сервис для управления базой данных
+  adminer:
+    image: adminer
+    container_name: wildberries_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+# Определяем том (хранилище) для данных
+volumes:
+  db_data:

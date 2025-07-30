@@ -1,0 +1,11 @@
+# Библиотеки для локальных скриптов (загрузка и анализ)
+pandas
+psycopg2-binary
+tqdm
+matplotlib
+seaborn
+
+# Библиотеки для NLP внутри PostgreSQL (через plpython3u)
+transformers
+torch
+sentence-transformers
